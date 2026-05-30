@@ -1,0 +1,10 @@
+const r = require('express').Router();
+const c = require('../controllers/session.controller');
+const { protect } = require('../middleware/auth');
+r.use(protect);
+r.get('/', c.list);
+r.post('/start', c.startFromTemplate);
+r.get('/:id', c.getOne);
+r.put('/:id', c.update);
+r.delete('/:id', c.remove);
+module.exports = r;

@@ -13,6 +13,7 @@ import ActivityHeatmap from '../components/ActivityHeatmap';
 import VolumeChart from '../components/VolumeChart';
 
 export default function Dashboard() {
+  
   const dispatch = useDispatch();
   const nav = useNavigate();
   const user = useSelector((s) => s.auth.user);
@@ -52,6 +53,7 @@ export default function Dashboard() {
     const r = await dispatch(startSession(todayPlan.template._id));
     if (r.payload?._id) nav(`/sessions/${r.payload._id}`);
   }
+  console.log(stats?.heat);
 
   return (
     <Container>
@@ -123,6 +125,7 @@ export default function Dashboard() {
         </SectionHead>
         <ActivityHeatmap heat={stats?.heat || {}} />
       </Card>
+      
 
       <Two>
         <Card $pad="24px">

@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { Check, Plus, Minus, Trash2, Save, ArrowLeft, Flag } from 'lucide-react';
 import { fetchSession, updateSession, clearCurrent } from '../features/sessions/sessionsSlice';
 import { Card, Button, Input, Label, Badge, Row, Gradient } from '../styles/ui';
+import { fetchStats } from '../features/stats/statsSlice';
+import { fetchSessions } from '../features/sessions/sessionsSlice';
 
 export default function SessionDetail() {
   const { id } = useParams();
@@ -41,12 +43,23 @@ export default function SessionDetail() {
 
   async function finish() {
     await dispatch(updateSession({ id, data: { logs: local.logs, notes: local.notes, durationMin: local.durationMin, completed: true } }));
+    dispatch(fetchStats(120));
+    dispatch(fetchSessions({ limit: 50 }));
     toast.success('Workout completed');
     nav('/dashboard');
   }
 
+//   local.logs.forEach(log => {
+//   console.log("Exercise:", log.exerciseName);
+
+//   log.sets.forEach(set => {
+//     console.log(set);
+//   });
+// });
   const totalVolume = local.logs.reduce((a, l) => a + l.sets.reduce((b, s) => b + (s.completed ? (s.reps || 0) * (s.weightKg || 0) : 0), 0), 0);
+  // console.log("Total Volume:", totalVolume);
   const totalSets = local.logs.reduce((a, l) => a + l.sets.filter((s) => s.completed).length, 0);
+  // console.log("Total Sets:", totalSets);
 
   return (
     <Wrap>

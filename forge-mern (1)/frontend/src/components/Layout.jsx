@@ -35,7 +35,7 @@ export default function Layout() {
       <Sidebar>
         <Brand>
           <BrandLogo><Dumbbell size={18} /></BrandLogo>
-          <BrandText>FORGE</BrandText>
+          <BrandText>FITBuddy</BrandText>
         </Brand>
         <Nav>
           {links.map((l) => (

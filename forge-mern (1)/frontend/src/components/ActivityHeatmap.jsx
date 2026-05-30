@@ -18,7 +18,12 @@ export default function ActivityHeatmap({ heat }) {
     for (let i = 0; i < days; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
-      const key = d.toISOString().slice(0, 10);
+      const key =
+  d.getFullYear() +
+  '-' +
+  String(d.getMonth() + 1).padStart(2, '0') +
+  '-' +
+  String(d.getDate()).padStart(2, '0');
       const v = heat[key] || 0;
       cells.push({ date: d, key, value: v, future: d > today });
     }
